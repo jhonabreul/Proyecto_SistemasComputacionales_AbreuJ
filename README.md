@@ -6,5 +6,6 @@ Jhonathan Abreu
 
 ## Estructura del repositorio
 
-- **Antecedentes**: artículos científicos con antecedentes importantes para el proyecto
-- **Avances**: presentaciones correspondientes a los avances del proyecto
+- **antecedentes**: artículos científicos con antecedentes importantes para el proyecto
+- **avances**: presentaciones correspondientes a los avances del proyecto
+- **data_parsing**: scripts de obtención de los datos etiquetados a partir de datos de encuesta/formulario
