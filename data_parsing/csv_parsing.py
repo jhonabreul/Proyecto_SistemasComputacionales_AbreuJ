@@ -1,7 +1,7 @@
 import csv
 
 CSV_DATA_FILENAME = 'training_data.csv'
-CSV_LABELED_DATA_FILENAME = 'training_data.csv'
+CSV_LABELED_DATA_FILENAME = 'labeled_training_data.csv'
 
 POSITIVE_FEELING_ROW = 4
 NEGATIVE_FEELING_ROW = 5
