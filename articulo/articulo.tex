@@ -1,0 +1,203 @@
+% ------------------------------ INICIO Paquetes ----------------------------- %
+
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote.
+%If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage[utf8x]{inputenc}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\usepackage{url}
+
+% ------------------------------- FIN Paquetes ------------------------------- %
+
+\def\contentsname{Contenidos}
+\def\listfigurename{Lista de Figuras}
+\def\listtablename{Lista de Tablas}
+\def\refname{Referencias}
+\def\indexname{Índice}
+\def\figurename{Fig.}
+\def\tablename{TABLE}
+\def\figurename{Figura}
+\def\partname{Parte}
+\def\appendixname{Apéndice}
+\def\abstractname{Resumen}
+\def\IEEEkeywordsname{Palabras clave}
+
+\begin{document}
+	
+% Para modificar estilo de bibliografía y forzar el uso de "et al." cuando hay 6 autores o más
+% NO QUITAR
+\bstctlcite{IEEEexample:BSTcontrol}
+
+% ------------------------------ INICIO Portada ------------------------------ %
+
+\title{
+	Análisis de Sentimientos de Texto a Nivel de Frase utilizando SVM y Redes Neuronales Convolucionales
+}
+
+\author{
+    \IEEEauthorblockN{Jhonathan Daniel Abreu Luque}
+    \IEEEauthorblockA{
+    	\textit{Escuela de Ingeniería de Sistemas}\\
+    	\textit{Universidad de Los Andes}\\
+    	Mérida, Venezuela\\
+    	jd.abreu25@gmail.com
+    }
+}
+
+\maketitle
+
+% -------------------------------- FIN Portada ------------------------------- %
+
+% ---------------------------------------------------------------------------- %
+
+% ------------------------------ INICIO Resumen ------------------------------ %
+
+\begin{abstract}
+
+	
+
+\end{abstract}
+
+% -------------------------------- FIN Resumen ------------------------------- %
+
+% ---------------------------------------------------------------------------- %
+
+% --------------------------- INICIO Palabras clave -------------------------- %
+
+\begin{IEEEkeywords}
+	
+	
+    	
+\end{IEEEkeywords}
+
+% ----------------------------- FIN Palabras clave --------------------------- %
+
+% ---------------------------------------------------------------------------- %
+
+% ---------------------------- INICIO Introducción --------------------------- %
+
+\section{Introducción}
+
+    Imagina un mundo en el que los humanos solo tengan las palabras como medio de comunicarse; un mundo en el que las expresiones faciales y corporales no jueguen ningún papel en la expresividad de las personas. Ahora intenta ponerte en el lugar de aquellas personas que viven con limitaciones motoras y cognitivas que les impiden expresar lo que piensan y sienten más allá de las palabras.
+
+    Las emociones son un componente semántico primario en la interacción humano-humano y juegan un papel sumamente importante en el comportamiento humano. Las emociones, al igual que el pensamiento, guían las acciones y los diálogos. Es por esto que una de las aplicaciones de gran importancia que puede darse al análisis de sentimiento es la robótica social, en la que se necesitan robots que sirvan como extensiones para los cuerpos de las personas con limitaciones motoras que les impidan expresarse por canales diferentes al habla; módulos que permitan a los robots detectar las emociones de los usuarios, de modo que puedan responder a los mismos y adaptarse a la interacción; robots que puedan expresar emociones para generar empatía. Sin embargo, no es el único campo de acción de esta disciplina.
+    
+    Analizar la creciente cantidad de reseñas de productos permitiría a las empresas detectar potenciales clientes y sus preferencias; analizar reseñas de películas permitiría la automatización de la clasificación de grandes bases de datos de cine internacional; detectar el sentimiento de una conversación permitiría que los avatares en juegos en linea muestren emociones en tiempo real, aumentando así la expresividad de las conversaciones humanas, incluso en ámbitos sociales remotos. Estas y muchas otras áreas forman el amplio campo de aplicación del análisis de sentimientos.
+    
+    El presente artículo pretende sentar las bases para el desarrollo de un framework de detección de emociones de texto para una futura integración en un avatar robótico, de modo que se vea dotado de nuevos canales de expresión e interactividad. Para esto, se requiere analizar métodos de representación de las oraciones de modo que puedan ser alimentadas a un clasificador y, además, realizar un estudio comparativo que permita detectar el clasificador más apto para este fin entre las SVM y las Redes Neuronales Convolucionales.
+    
+    El resto de este articulo, entonces, se organiza de la siguiente manera: en la Sección \ref{sec:antecedentes} se presenta el trabajo relacionado que ya ha sido realizado en el área del análisis de sentimientos de texto. La Sección \ref{sec:metodologia} describe la metodología utilizada, con una breve introducción a los vectorizadores y los clasificadores a estudiar. La Sección \ref{sec:experimentos} muestra las pruebas realizadas y el análisis de los resultados obtenidos. Por último, la Sección \ref{sec:conclusiones} presenta las conclusiones dela investigación y los pasos siguientes para la continuación del proyecto.
+
+% ----------------------------- FIN Introducción ----------------------------- %
+
+% ---------------------------------------------------------------------------- %
+
+% ------------------------- INICIO Trabajo Relacionado ----------------------- %
+
+\section{Trabajo Relacionado} \label{sec:antecedentes}
+
+    El análisis de sentimientos juega un papel realmente importante en la robótica social, puesto que en la interacción humano-robot es necesario que las máquinas tengan la capacidad de detectar y expresar emociones y/o sentimientos para mejorar la interacción. Sin embargo, la interacción humano-robot no es el único campo de aplicación del análisis de sentimientos, puesto que actualmente se ha convertido en uno de los campos de investigación más activos en las áreas de los negocios, marketing, toma de decisiones, campañas políticas y otras afines\cite{alzahrani2018development}.
+    
+    Debido a que la emoción es un componente semántico primario en la comunicación humana, los robots sociales deben ser capaces de expresar emociones en la comunicación interactiva. Se han desarrollado métodos de generación de expresiones faciales a partir de texto en los que se han utilizado SVM para clasificar o mapear oraciones a la emoción que esta representa \cite{bai2014asentiment} --- siendo estas solo cuatro de las seis emociones básicas \cite{scherer1979nonlinguistic}. Para la representación vectorial de las palabras utilizaron la herramienta Word2Vec, la cual toma un corpus grande como entrada y produce vectores de palabras como salida. Proponen, además, un método para utilizar la representación vectorial de las palabras para obtener la representación vectorial de las oraciones y, por motivo de comparación, utilizan también el modelo de aprendizaje automático Latent Dirichlet Allocation (LDA). Obtuvieron los mejores resultados cuando la dimensión de los vectores en la salida del modelo Word2Vec era 400 pero, sin embargo, no obtuvieron buenos resultados de las SVM (33\% de precisión), alegando esto a la dispersión de los datos de alta dimensión.
+    
+    Lejos del campo de la robótica social, investigadores han utilizado las SVM para realizar análisis de sentimientos en el campo de la minería de opiniones, específicamente en microblogs de finanzas de China \cite{yan2018sentiment}. Las SVM, en este caso, son utilizadas para extraer la polaridad de las opiniones referentes a un mismo tópico, las cuales son representadas de forma vectorial según un lexicón de palabras características de sentimientos. Para el caso de microblogs de diferentes tópicos, proponen un método basado en reglas. La principal conclusión de dicha investigación es que, como lo indicaba su hipótesis, las SVM son más aptas para clasificar microblogs de un mismo tópico, alcanzando hasta un 81.75\% de precisión.
+
+    Las SVM también son utilizadas para detectar la orientación del sentimiento (positivo, negativo o neutral) de opiniones o reseñas de usuario sobre películas. Un estudio comparativo mostró que, en este caso, las SVM lineales proveen un mejor desempeño que los clasificadores Bayesianos Ingenuos, alcanzando hasta un 87.5\% de precisión \cite{rana2016comparative} en opiniones sobre películas de la categoría drama.
+    
+    Cabe mencionar que, además del gran potencial de las SVM para el análisis de sentimientos, la literatura muestra que las Redes Neuronales Convolucionales son otro método de aprendizaje supervisado altamente utilizado en la actualidad para este fin. Se han alcanzado porcentajes de precisión de 80.69\% para análisis de sentimientos en texto \cite{chachra2017sentiment}, 85.2\% utilizando el método fastText de Facebook para obtener la representación vectorial de las palabras \cite{santos2017sentiment} y 99.87\% para texto escrito en lenguaje Bangla \cite{alam2017sentiment}.
+    
+    Lo que indican las investigaciones ya realizadas en este campo es que no existe un único tipo de clasificador óptimo para realizar análisis de sentimientos, pues puede también depender del origen de los datos y la forma en la que estos se representan. Esto apunta a la necesidad de, probablemente, realizar estudios comparativos sobre los posibles clasificadores posibles que puedan ser utilizado, principalmente debido a los limitados conocimientos que se tienen en el área de la computación inteligente. Adicionalmente, destaca también el hecho de que la vectorización del texto puede realizarse de muchas maneras, también dependiendo de la naturaleza de los datos. Debido a la poca cantidad de datos disponibles para esta investigación, es posible que la utilización de vectorizadores simples como Bag-Of-Words se imponga sobre vectorizadores más complejos como Word2Vec o fastText.
+    
+% -------------------------- FIN Trabajo Relacionado ------------------------- %
+
+% ---------------------------------------------------------------------------- %
+
+% ---------------------------- INICIO Metodología ---------------------------- %
+
+\section{Metodología} \label{sec:metodologia}
+
+
+
+% ----------------------------- FIN Metodología ------------------------------ %
+
+% ---------------------------------------------------------------------------- %
+
+% ---------------------------- INICIO Experimentos --------------------------- %
+
+\section{Experimentos} \label{sec:experimentos}
+
+    Los experimentos fueron llevados a cabo utilizando la plataforma Colaboratory de Google \cite{colaboratory}, en un entorno que utiliza GPU y Python 3. Los clasificadores utilizados se encuentran de forma pública en bibliotecas de Python y se utilizaron bases de datos públicas o construidas.
+    
+    % ------------------------- INICIO Bases de datos ------------------------ %
+    
+    \subsection{Bases de datos}
+    
+        El proceso de captura de datos fue diseñado para ser lo más general posible, para lo cual se creó un formulario de Google Forms, el cual contenía las siguientes preguntas específicas para este proyecto:
+        
+        \begin{enumerate}
+            \item Escriba una frase que exprese un sentimiento positivo
+            
+            \item Escriba una frase que exprese un sentimiento negativo
+            
+            \item Escriba una frase que exprese un sentimiento neutral
+        \end{enumerate}
+    
+        No obstante, debido a la poca colaboración obtenida, no se pudo recolectar suficientes datos, por lo cual se decidió realizar una búsqueda exhaustiva de bases de datos. Se utilizó, entonces, una base de datos de tweets de España, en formato XML, etiquetada con sentimientos que van desde muy negativo a muy positivo (N+, N, NEU, NONE, P, P+). Esta base de datos fue obtenida del Taller de Análisis Semántico en la SEPLN (TASS) 2012 \cite{sepln2012tass}. Por motivos de licencia, el corpus del TASS no puede ser distribuido, pero puede obtenerse públicamente solicitándolo al correo electrónico de contacto que se encuentra en el sitio Web del taller.
+        
+        Vale la pena mencionar que, con el motivo de aprovechar los datos previamente recolectados, estos se combinaron con los del TASS.
+    
+    % --------------------------- FIN Bases de datos ------------------------- %
+    
+    % ------------------------------------------------------------------------ %
+    
+    % --------------------- INICIO Medida de rendimiento --------------------- %
+    
+    \subsection{Medida de rendimiento}
+    
+        Para realizar la comparación entre los clasificadores y obtener los hiper-parámetros óptimos, se utilizará la métrica denominada precisión de la validación, la cual indica el porcentaje de predicciones correctas echas sobre la data de prueba y apunta a optimizar la generalización de las predicciones echas por el clasificador en datos completamente diferentes a los utilizados para su entrenamiento.
+    
+    % ----------------------- FIN Medida de rendimiento ---------------------- %
+    
+    % ------------------------------------------------------------------------ %
+    
+    % ---------------- INICIO Resultados de los experimentos ----------------- %
+    
+    \subsection{Resultados de los experimentos}
+    
+        
+    
+    % ------------------ FIN Resultados de los experimentos ------------------ %
+
+% ----------------------------- FIN Experimentos ----------------------------- %
+
+% ---------------------------------------------------------------------------- %
+
+% ---------------------------- INICIO Conclusiones --------------------------- %
+
+\section{Conclusiones} \label{sec:conclusiones}
+    
+	
+
+% ----------------------------- FIN Conclusiones ----------------------------- %
+
+% ---------------------------------------------------------------------------- %
+
+% ---------------------------- INICIO Referencias ---------------------------- %
+
+\Urlmuskip=0mu plus 1mu\relax
+\bibliographystyle{IEEEtran}
+\nocite{*}
+\bibliography{referencias}
+
+% ------------------------------ FIN Referencias ----------------------------- %
+
+\end{document}
