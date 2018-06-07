@@ -2,8 +2,8 @@ import xml.etree.ElementTree as ET
 import csv
 import re
 
-labeledTweetsFileName = 'general-train-tagged.xml'
-csvLabeledDataFileName = '../labeled_training_data.csv'
+labeledTweetsFileName = 'tass_tweets/general-train-tagged.xml'
+csvLabeledDataFileName = 'labeled_training_data.csv'
 
 sentimentsMap = {
 					'N': 'negativo',
@@ -31,6 +31,8 @@ with open(csvLabeledDataFileName, 'a') as csvLabeledDataFile:
 	for tweet in tweets:
 		tweetContent = str(tweet.findtext('content'))
 		tweetContent = re.sub(tweetCleanupRegexp, '', tweetContent).strip()
+		if not tweetContent:
+			continue
 		
 		tweetSentiment = tweet.findtext('./sentiments/polarity/value')
 		tweetSentiment = sentimentsMap[tweetSentiment]
