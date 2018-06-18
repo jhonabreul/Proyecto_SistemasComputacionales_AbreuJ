@@ -125,8 +125,36 @@
 
 \section{Metodología} \label{sec:metodologia}
 
+    
 
-
+    % --------------------- INICIO Limpieza de oraciones --------------------- %
+    
+    \subsection{Limpieza de la oración}
+    
+        
+    
+    % ----------------------- FIN Limpieza de oraciones ---------------------- %
+    
+    % ------------------------------------------------------------------------ %
+    
+    % -------------------- INICIO Representación vectorial ------------------- %
+    
+    \subsection{Representación vectorial de las oraciones}
+    
+        
+    
+    % ---------------------- FIN Representación vectorial -------------------- %
+    
+    % ------------------------------------------------------------------------ %
+    
+    % ----------------- INICIO Clasificación de las oraciones ---------------- %
+    
+    \subsection{Clasificación de las oraciones}
+    
+        
+    
+    % ------------------- FIN Clasificación de las oraciones ----------------- %
+    
 % ----------------------------- FIN Metodología ------------------------------ %
 
 % ---------------------------------------------------------------------------- %
@@ -141,19 +169,21 @@
     
     \subsection{Bases de datos}
     
-        El proceso de captura de datos fue diseñado para ser lo más general posible, para lo cual se creó un formulario de Google Forms, el cual contenía las siguientes preguntas específicas para este proyecto:
+        Ningún tipo de base de datos existente fue utilizado para el desarrollo de este proyecto. En su lugar, se llevó a cabo un proceso de captura de datos diseñado para ser lo más general posible --- es decir, útil para representar frases típicas de una conversación común --- para lo cual se creó un formulario de Google Forms, en el cual se solicitaba la información requerida mediante las siguientes solicitudes:
         
         \begin{enumerate}
-            \item Escriba una frase que exprese un sentimiento positivo
+            \item Escriba una frase que exprese un sentimiento positivo.
             
-            \item Escriba una frase que exprese un sentimiento negativo
+            \item Escriba una frase que exprese un sentimiento negativo.
             
-            \item Escriba una frase que exprese un sentimiento neutral
+            \item Escriba una frase que exprese un sentimiento neutral.
         \end{enumerate}
     
-        No obstante, debido a la poca colaboración obtenida, no se pudo recolectar suficientes datos, por lo cual se decidió realizar una búsqueda exhaustiva de bases de datos. Se utilizó, entonces, una base de datos de tweets de España, en formato XML, etiquetada con sentimientos que van desde muy negativo a muy positivo (N+, N, NEU, NONE, P, P+). Esta base de datos fue obtenida del Taller de Análisis Semántico en la SEPLN (TASS) 2012 \cite{sepln2012tass}. Por motivos de licencia, el corpus del TASS no puede ser distribuido, pero puede obtenerse públicamente solicitándolo al correo electrónico de contacto que se encuentra en el sitio Web del taller.
+        El formulario fue distribuido a diversas personas, so solo de la comunidad estudiantil, sino también a personas ajenas al proyecto, como familiares y amigos. De esta manera, se pudo obtener una base de datos compuesta de 600 frases u oraciones, distribuidas equitativamente entre \textit{Positivas}, \textit{Negativas} y \textit{Neutrales}.
+            
+        %No obstante, debido a la poca colaboración obtenida, no se pudo recolectar suficientes datos, por lo cual se decidió realizar una búsqueda exhaustiva de bases de datos. Se utilizó, entonces, una base de datos de tweets de España, en formato XML, etiquetada con sentimientos que van desde muy negativo a muy positivo (N+, N, NEU, NONE, P, P+). Esta base de datos fue obtenida del Taller de Análisis Semántico en la SEPLN (TASS) 2012 \cite{sepln2012tass}. Por motivos de licencia, el corpus del TASS no puede ser distribuido, pero puede obtenerse públicamente solicitándolo al correo electrónico de contacto que se encuentra en el sitio Web del taller.
         
-        Vale la pena mencionar que, con el motivo de aprovechar los datos previamente recolectados, estos se combinaron con los del TASS.
+        %Vale la pena mencionar que, con el motivo de aprovechar los datos previamente recolectados, estos se combinaron con los del TASS.
     
     % --------------------------- FIN Bases de datos ------------------------- %
     
@@ -163,7 +193,7 @@
     
     \subsection{Medida de rendimiento}
     
-        Para realizar la comparación entre los clasificadores y obtener los hiper-parámetros óptimos, se utilizará la métrica denominada precisión de la validación, la cual indica el porcentaje de predicciones correctas echas sobre la data de prueba y apunta a optimizar la generalización de las predicciones echas por el clasificador en datos completamente diferentes a los utilizados para su entrenamiento.
+        Para realizar la comparación entre los clasificadores y obtener los hiper-parámetros óptimos, se utilizó la métrica denominada precisión de la validación, la cual indica el porcentaje de predicciones correctas echas sobre la data de prueba y apunta a optimizar la generalización de las predicciones echas por el clasificador en datos completamente diferentes a los utilizados para su entrenamiento. Optimizar esta métrica es útil en casos en los que se desea acertar la mayor cantidad de veces que sea posible, como es requerido en el presente proyecto.
     
     % ----------------------- FIN Medida de rendimiento ---------------------- %
     
