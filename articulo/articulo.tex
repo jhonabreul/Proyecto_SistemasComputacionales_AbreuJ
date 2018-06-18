@@ -24,7 +24,7 @@
 \def\refname{Referencias}
 \def\indexname{Índice}
 \def\figurename{Fig.}
-\def\tablename{TABLE}
+\def\tablename{TABLA}
 \def\figurename{Figura}
 \def\partname{Parte}
 \def\appendixname{Apéndice}
@@ -125,14 +125,34 @@
 
 \section{Metodología} \label{sec:metodologia}
 
-    
+    Con la finalidad de clasificar o \textit{mapear} una frase u oración a un sentimiento, se propone un conjunto de operaciones o un método para llevar las frases a un dominio apto para la alimentación de un modelo de aprendizaje automatizado que clasifique cada oración en una clase particular. En lugar de emociones específicas, en este proyecto se trata con la polaridad de los sentimientos, agregando además la posible \textit{neutralidad} de una oración, quedando entonces tres clases puntuales: \textit{positivo} (felicidad, sorpresa, emoción, entre otros), \textit{negativo} (tristeza, enojo, miedo, entre otros) y \textit{neutral}.
 
     % --------------------- INICIO Limpieza de oraciones --------------------- %
     
     \subsection{Limpieza de la oración}
     
-        
+    	El proceso para transformar las oraciones a un dominio apto para los clasificadores comienza con su limpieza. Este procedimiento depende del idioma que se esté procesando y para esto se utilizan algunas técnicas del Procesamiento de Lenguaje Natural (NLP). El proceso se resume a continuación:
+    	\newline
+    	
+    	\subsubsection{Tokenización}
+    	
+    		Esta etapa consiste sencillamente en llevar una cadena de caracteres a una lista o arreglo de cadenas, siendo cada una de estas una palabra de la oración. Esto es necesario porque para llevar las oraciones a un dominio vectorial, primero se debe realizar este procedimiento para cada palabra para luego utilizar algún método aritmético o algebraico para unirlas en la oración que estas conforman.
+    		\newline
+    	
+    	\subsubsection{Normalización}
+    	
+    		En esta etapa, se llevan a cabo tres sub-tareas principales: la conversión de cada letra de los tokens a minúsculas, la eliminación de todos los acentos (incluyendo las virgulillas de las letras \textit{ñ}) y la exclusión de los símbolos de puntuación y dígitos numéricos. Este procedimiento se realiza con el fin de estandarizar el corpus de entrenamiento y, de cierta forma, lidiar con los errores de puntuación y acentuación.
+    		\newline	
+    	
+    	\subsubsection{Eliminación de palabras vacías}
+    	
+    		Se denominan palabras vacías o \textit{stop-words} a un conjunto de palabras que no tienen un significado semántico importante a la hora de realizar el análisis de sentimientos y procesamiento de lenguaje natural en general. Se incluyen en este conjunto los artículos, pronombres, preposiciones, etc. Cabe destacar que no existe una lista definitiva de palabras vacías y se puede utilizar cualquiera disponible en corpus o bibliotecas y frameworks de NLP.
+    		\newline
+    	
+    	\subsubsection{Stemming}
     
+    		El proceso de \textit{stemming} finaliza la limpieza de las oraciones y consiste en la reducción de las palabras (flexionadas o derivadas) a su raíz o \textit{stem}. A modo de ilustración, este proceso permite que se puedan identificar las palabras ``bibliotec\textbf{as}'', ``bibliotec\textbf{ario}'' y ``bibliotec\textbf{arias}'' a partir de su raíz ``bibliotec\textbf{a}'' o simplemente ``bibliotec''. De este modo, es posible ampliar el rango de identificación de las palabras sin necesidad de construir un vocabulario con todas las palabras y sus posibles formas. 
+    		    
     % ----------------------- FIN Limpieza de oraciones ---------------------- %
     
     % ------------------------------------------------------------------------ %
@@ -141,7 +161,30 @@
     
     \subsection{Representación vectorial de las oraciones}
     
+        La extracción de características o \textit{feature extraction} consiste en extraer las características de las oraciones en vectores numéricos, pues la mayoría de los algoritmos esperan vectores de características numéricas de tamaños fijos en lugar de documentos en crudo de longitud variable.
         
+        En este contexto, se presenta una estrategia de extracción de características útil para vocabularios pequeños. En este, se genera un vocabulario con, posiblemente, todas las palabras que aparecen en los documentos de entrada. Es posible limitar el vocabulario a aquellos \textit{tokens} con frecuencias de aparición en cierto intervalo. La representación de una lista de oraciones será, entonces, una matriz de unos y ceros de en la que las filas representan las oraciones y las columnas los \textit{tokens} del vocabulario, como se muestra en la Tabla \ref{tab:vectores1}. De esta manera, un $\alpha_{ij} = 1$ representa que la oración o documento \textit{i} contiene el \textit{token j}.
+        
+        \begin{table}[]
+            \centering
+            \caption{Representación vectorial del conjunto de documentos u oraciones}
+            \label{tab:vectores1}
+            \begin{tabular}{c|cccccc}
+                   & t1            & t2            & ... & tj            & ... & tn \\ \hline
+                d1 & $\alpha_{11}$ & $\alpha_{12}$ & ... & $\alpha_{1j}$ & ... & $\alpha_{1n}$ \\
+                d2 & $\alpha_{21}$ & $\alpha_{22}$ & ... & $\alpha_{2j}$ & ... & $\alpha_{2n}$ \\
+                .  & .             & .             & ... & .             & ... & . \\
+                di & $\alpha_{i1}$ & $\alpha_{i2}$ & ... & $\alpha_{ij}$ & ... & $\alpha_{in}$ \\
+                .  & .             & .             & ... & .             & ... & . \\
+                dm & $\alpha_{m1}$ & $\alpha_{m2}$ & ... & $\alpha_{mj}$ & ... & $\alpha_{mn}$
+            \end{tabular}
+        \end{table}
+    
+        De esta manera, si se tiene un el vocabulario \{``oración'', ``primera'', ``es'', ``frase'', ``esta'', ``una'', ``escribe''\}, los documentos ``Esta es una pequeña oración'' y ``Escribe dos frases cortas'', se representarían con los vectores [1, 1, 1, 0, 1] y [1, 0, 1, 0], respectivamente. No obstante, la oración ``¿Es esta una oración pequeña?'', se representa de con el mismo vector que ``Esta es una pequeña oración'', pues no se considera ningún tipo de orden relativo entre las palabras y, por consiguiente, se pierde cierta información contextual.
+        
+        En este sentido, es posible entonces utilizar el concepto de bigrama, con el cual se puede conservar parte del sentido contextual de los documentos al considerar \textit{tokens} de longitud menor o igual que 2. Como ejemplo, si el vocabulario anterior se construyó con un único documento ``esta es una de las primeras oraciones o frases que escribe'' (siendo el caso hipotético en que las palabras ``de'', ``las'', ``o'' y ``que'' fueron eliminadas por ser consideradas palabras vacías), entonces el nuevo vocabulario, al utilizar bigramas, sería \{``esta'', ``es'', ``una'', ``primera'', ``oracion'', ``frase'', ``escribe'', ``esta es'', ``es una'', ``una primera'', ``primera oración'', ``oración frase'', ``frase escribe''\} y los vectores tendrían dimensión 13. Utilizando este nuevo vocabulario, las oraciones ``Esta es una pequeña oración'' y ``¿Es esta una oración pequeña?'' tendrían representaciones vectoriales diferenciadas. Este concepto puede expandirse y considerarse n-gramas en lugar de bigramas.
+        
+        Existen, además, otros métodos de extracción de características para texto, como lo son el \textit{tf-idf} y el \textit{Word2Vec}, que permiten asociar palabras con significados semánticos similares en ``nubes'' de vectores o dar pesos a las palabras con más importancia en cada documento. No obstante, estos son útiles y más aptos para conjuntos de datos bastante amplios que contengan vocabularios de mayor tamaño.
     
     % ---------------------- FIN Representación vectorial -------------------- %
     
@@ -151,7 +194,7 @@
     
     \subsection{Clasificación de las oraciones}
     
-        
+        Existen diversos tipos de clasificadores en el mundo del aprendizaje automático. Serán considerados, en este caso, dos de estos, por ser muy utilizados en aplicaciones de clasificación de texto y análisis de sentimientos. Las Máquinas de Vectores de Soporte (SVM) y las Redes Neuronales Convolucionales con clasificadores totalmente distintos, siendo el segundo muy utilizado para el reconocimiento y análisis de imágenes, pues se basa, muy someramente, en la búsqueda de patrones bidimensionales; sin embargo, este concepto se puede abstraer para análisis en vectores unidimensionales. Las SVM, por otro lado, se basan en conceptos matemáticos e intentan encontrar el hiperplano que mejor separe las clases a clasificar. Se está frente a dos formas totalmente diferentes de clasificación y se esperarían, entonces, resultados bien diferenciados.
     
     % ------------------- FIN Clasificación de las oraciones ----------------- %
     
@@ -167,7 +210,7 @@
     
     % ------------------------- INICIO Bases de datos ------------------------ %
     
-    \subsection{Bases de datos}
+    \subsection{Base de datos}
     
         Ningún tipo de base de datos existente fue utilizado para el desarrollo de este proyecto. En su lugar, se llevó a cabo un proceso de captura de datos diseñado para ser lo más general posible --- es decir, útil para representar frases típicas de una conversación común --- para lo cual se creó un formulario de Google Forms, en el cual se solicitaba la información requerida mediante las siguientes solicitudes:
         
