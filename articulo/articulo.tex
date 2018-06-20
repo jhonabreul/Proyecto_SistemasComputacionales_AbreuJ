@@ -141,7 +141,7 @@
     	
     	\subsubsection{Normalización}
     	
-    		En esta etapa, se llevan a cabo tres sub-tareas principales: la conversión de cada letra de los tokens a minúsculas, la eliminación de todos los acentos (incluyendo las virgulillas de las letras \textit{ñ}) y la exclusión de los símbolos de puntuación y dígitos numéricos. Este procedimiento se realiza con el fin de estandarizar el corpus de entrenamiento y, de cierta forma, lidiar con los errores de puntuación y acentuación.
+    		En esta etapa, se llevan a cabo tres sub-tareas principales: la conversión de cada letra de los \textit{tokens} a minúsculas, la eliminación de todos los acentos (incluyendo las virgulillas de las letras \textit{ñ}) y la exclusión de los símbolos de puntuación y dígitos numéricos. Este procedimiento se realiza con el fin de estandarizar el corpus de entrenamiento y, de cierta forma, lidiar con los errores de puntuación y acentuación.
     		\newline	
     	
     	\subsubsection{Eliminación de palabras vacías}
@@ -194,7 +194,7 @@
     
     \subsection{Clasificación de las oraciones}
     
-        Existen diversos tipos de clasificadores en el mundo del aprendizaje automático. Serán considerados, en este caso, dos de estos, por ser muy utilizados en aplicaciones de clasificación de texto y análisis de sentimientos. Las Máquinas de Vectores de Soporte (SVM) y las Redes Neuronales Convolucionales con clasificadores totalmente distintos, siendo el segundo muy utilizado para el reconocimiento y análisis de imágenes, pues se basa, muy someramente, en la búsqueda de patrones bidimensionales; sin embargo, este concepto se puede abstraer para análisis en vectores unidimensionales. Las SVM, por otro lado, se basan en conceptos matemáticos e intentan encontrar el hiperplano que mejor separe las clases a clasificar. Se está frente a dos formas totalmente diferentes de clasificación y se esperarían, entonces, resultados bien diferenciados.
+        Existen diversos tipos de clasificadores en el mundo del aprendizaje automático. Serán considerados, en este caso, dos de estos, por ser muy utilizados en aplicaciones de clasificación de texto y análisis de sentimientos. Las Máquinas de Vectores de Soporte (SVM) y las Redes Neuronales Convolucionales (RNC) son clasificadores totalmente distintos, siendo el segundo muy utilizado para el reconocimiento y análisis de imágenes, pues se basa, muy someramente, en la búsqueda de patrones bidimensionales; sin embargo, este concepto se puede abstraer para análisis en vectores unidimensionales. Las SVM, por otro lado, se basan en conceptos matemáticos e intentan encontrar el hiperplano que mejor separe las clases a clasificar. Se está frente a dos formas totalmente diferentes de clasificación y se esperarían, entonces, resultados bien diferenciados.
     
     % ------------------- FIN Clasificación de las oraciones ----------------- %
     
@@ -242,7 +242,7 @@
     
     \subsection{Resultados de los experimentos}
     
-        Se realizaron implementaciones con SVM y Redes Neuronales Convolucionales, utilizando vectorizadores de tipo Bag-Of-Words y Word2Vec, para hacer comparaciones. Para clasificar en tres clases diferentes (positivo, negativo y neutral), se espera que el mínimo porcentaje de exactitud sea 66,66\%, de modo que las predicciones sean mejor que aleatorias. Los resultados indican que las SVM con el vectorizador Word2Vec no logran el desempeño mínimo requerido (ver Figura \ref{fig:acc_svm_w2v}), incluso para distintos tamaños de los vectores que representan los documentos. Una de las razones que podrían constatar estos resultados es el tamaño del dataset utilizado, pues es requerido, para los SVM, que la cantidad de datos sea la suficiente para obtener del modelo una generosa habilidad para generalizar,sobre todo para los modelos no lineales. Otro factor importante es el uso de Word2Vec para vectorizar los documentos, pues este modelo también requiere de mayor cantidad de datos para mejorar su rendimiento.
+        Se realizaron implementaciones con SVM y RNC, utilizando vectorizadores de tipo Bag-Of-Words y Word2Vec, para hacer comparaciones. Para clasificar en tres clases diferentes (positivo, negativo y neutral), se espera que el mínimo porcentaje de exactitud sea 66,66\%, de modo que las predicciones sean mejor que aleatorias. Los resultados indican que las SVM con el vectorizador Word2Vec no logran el desempeño mínimo requerido (ver Figura \ref{fig:acc_svm_w2v}), incluso para distintos tamaños de los vectores que representan los documentos. Una de las razones que podrían constatar estos resultados es el tamaño del dataset utilizado, pues es requerido, para los SVM, que la cantidad de datos sea la suficiente para obtener del modelo una generosa habilidad para generalizar,sobre todo para los modelos no lineales. Otro factor importante es el uso de Word2Vec para vectorizar los documentos, pues este modelo también requiere de mayor cantidad de datos para mejorar su rendimiento.
     
         \begin{figure}[htbp]
             \centerline{\includegraphics[width=\linewidth]{figuras/acc_svm_w2v.png}}
@@ -274,7 +274,7 @@
         \begin{figure}[htbp]
             \centerline{\includegraphics[width=\linewidth]{figuras/acc_rnc_ngrams.png}}
             %\captionsetup{justification=centering}
-            \caption{Comparación del desempeño de las Redes Neuronales Convolucionales con vectorizador Bag-Of-Words para distintos \textit{n}-gramas.}
+            \caption{Comparación del desempeño de las RNC con vectorizador Bag-Of-Words para distintos \textit{n}-gramas.}
             \label{fig:acc_rnc_ngrams}
         \end{figure}
     
@@ -299,7 +299,7 @@
     
 	El objetivo de esta investigación es estudiar y comparar dos tipos de vectorizadores y dos tipos de clasificadores para la identificación de la orientación del sentimiento de documentos (texto). Las aplicaciones son bastas, siendo una de estas la implementación de detección de emociones, en un canal, para un robot social. Este canal puede ser el audio, el cual, luego se ser procesado y transformado a texto, puede ser clasificado por el módulo en cuestión.
     
-    Debido a la poca cantidad de datos disponibles, fue necesario realizar pruebas con distintos tipos de vectorizadores, las cuales apuntan a que un modelo simple, como el Bag-Of-Words, se desempeña mejor para pocos datos que vectorizadores más complejos, como el Word2Vec. Del mismo modo y, probablemente por el mismo motivo, las Redes Neuronales Convolucionales mostraron un rendimiento superior a las SVM, sobre todo cuando se toma en cuenta más información contextual en el proceso de vectorización.
+    Debido a la poca cantidad de datos disponibles, fue necesario realizar pruebas con distintos tipos de vectorizadores, las cuales apuntan a que un modelo simple, como el Bag-Of-Words, se desempeña mejor para pocos datos que vectorizadores más complejos, como el Word2Vec. Del mismo modo y, probablemente por el mismo motivo, las RNC mostraron un rendimiento superior a las SVM, sobre todo cuando se toma en cuenta más información contextual en el proceso de vectorización.
     
     Se cree que, si se procede a la recaudación de más datos, siguiendo el mismo procedimiento para la recolección de los actualmente disponibles, se pueda mejorar el desempeño de los clasificadores para obtener mejores resultados. Se delega como trabajo futuro el proceso de expansión de la base de datos y el desarrollo de una aplicación que permita realizar la conversión audio-texto para sentar las bases para un módulo integrable de detección de emociones para un robot social.
 
