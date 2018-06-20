@@ -15,7 +15,7 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 \usepackage{url}
-\usepackage[font=small]{caption}
+%\usepackage[font=small]{caption}
 
 % ------------------------------- FIN Paquetes ------------------------------- %
 
@@ -108,11 +108,11 @@
 
     El análisis de sentimientos juega un papel realmente importante en la robótica social, puesto que en la interacción humano-robot es necesario que las máquinas tengan la capacidad de detectar y expresar emociones y/o sentimientos para mejorar la interacción. Sin embargo, la interacción humano-robot no es el único campo de aplicación del análisis de sentimientos, puesto que actualmente se ha convertido en uno de los campos de investigación más activos en las áreas de los negocios, marketing, toma de decisiones, campañas políticas y otras afines\cite{alzahrani2018development}.
     
-    Debido a que la emoción es un componente semántico primario en la comunicación humana, los robots sociales deben ser capaces de expresar emociones en la comunicación interactiva. Se han desarrollado métodos de generación de expresiones faciales a partir de texto en los que se han utilizado SVM para clasificar o mapear oraciones a la emoción que esta representa \cite{bai2014asentiment} --- siendo estas solo cuatro de las seis emociones básicas \cite{scherer1979nonlinguistic}. Para la representación vectorial de las palabras utilizaron la herramienta Word2Vec, la cual toma un corpus grande como entrada y produce vectores de palabras como salida. Proponen, además, un método para utilizar la representación vectorial de las palabras para obtener la representación vectorial de las oraciones y, por motivo de comparación, utilizan también el modelo de aprendizaje automático Latent Dirichlet Allocation (LDA). Obtuvieron los mejores resultados cuando la dimensión de los vectores en la salida del modelo Word2Vec era 400 pero, sin embargo, no obtuvieron buenos resultados de las SVM (33\% de precisión), alegando esto a la dispersión de los datos de alta dimensión.
+    Debido a que la emoción es un componente semántico primario en la comunicación humana, los robots sociales deben ser capaces de expresar emociones en la comunicación interactiva. Se han desarrollado métodos de generación de expresiones faciales a partir de texto en los que se han utilizado SVM para clasificar o mapear oraciones a la emoción que esta representa \cite{bai2014asentiment} --- siendo estas solo cuatro de las seis emociones básicas \cite{scherer1979nonlinguistic}. Para la representación vectorial de las palabras utilizaron la herramienta Word2Vec, la cual toma un corpus grande como entrada y produce vectores de palabras como salida. Proponen, además, un método para utilizar la representación vectorial de las palabras para obtener la representación vectorial de las oraciones y, por motivo de comparación, utilizan también el modelo de aprendizaje automático Latent Dirichlet Allocation (LDA). Obtuvieron los mejores resultados cuando la dimensión de los vectores en la salida del modelo Word2Vec era 400 pero, sin embargo, no obtuvieron buenos resultados de las SVM (33\% de precisión), alegando esto a la dispersión de los datos de alta dimensión. Según los resultados de dicha investigación, es posible que el desempeño de vectorizadores de tipo Word2Vec no sea el mejor para bases de datos pequeñas, siendo preferible elegir métodos menos complejos.
     
-    Lejos del campo de la robótica social, investigadores han utilizado las SVM para realizar análisis de sentimientos en el campo de la minería de opiniones, específicamente en microblogs de finanzas de China \cite{yan2018sentiment}. Las SVM, en este caso, son utilizadas para extraer la polaridad de las opiniones referentes a un mismo tópico, las cuales son representadas de forma vectorial según un lexicón de palabras características de sentimientos. Para el caso de microblogs de diferentes tópicos, proponen un método basado en reglas. La principal conclusión de dicha investigación es que, como lo indicaba su hipótesis, las SVM son más aptas para clasificar microblogs de un mismo tópico, alcanzando hasta un 81.75\% de precisión.
+    Lejos del campo de la robótica social, investigadores han utilizado las SVM para realizar análisis de sentimientos en el campo de la minería de opiniones, específicamente en microblogs de finanzas de China \cite{yan2018sentiment}. Las SVM, en este caso, son utilizadas para extraer la polaridad de las opiniones referentes a un mismo tópico, las cuales son representadas de forma vectorial según un lexicón de palabras características de sentimientos. Para el caso de microblogs de diferentes tópicos, proponen un método basado en reglas. La principal conclusión de dicha investigación es que, como lo indicaba su hipótesis, las SVM son más aptas para clasificar microblogs de un mismo tópico, alcanzando hasta un 81.75\% de precisión. Un hecho que se destaca y puede tomarse de la investigación anteriormente mencionada, es que las SVM se desempeñan mejor cuando los datos provienen de un mismo tópico, por lo cual, es posible que sea necesario estudiar otros clasificadores para datos mas generalizados.
 
-    Las SVM también son utilizadas para detectar la orientación del sentimiento (positivo, negativo o neutral) de opiniones o reseñas de usuario sobre películas. Un estudio comparativo mostró que, en este caso, las SVM lineales proveen un mejor desempeño que los clasificadores Bayesianos Ingenuos, alcanzando hasta un 87.5\% de precisión \cite{rana2016comparative} en opiniones sobre películas de la categoría drama.
+    Las SVM también son utilizadas para detectar la orientación del sentimiento (positivo, negativo o neutral) de opiniones o reseñas de usuario sobre películas. Un estudio comparativo mostró que, en este caso, las SVM lineales proveen un mejor desempeño que los clasificadores Bayesianos Ingenuos, alcanzando hasta un 87.5\% de precisión \cite{rana2016comparative} en opiniones sobre películas de la categoría drama. Una cosa interesante de esta investigación es el uso del \textit{stemming} (conversión de las palabras a su raíz) como parte del procesamiento de los datos previo al entrenamiento del clasificador; vale la pena estudiar este procedimiento y su utilidad en el Procesamiento de Lenguaje Natural y en análisis de sentimientos.
     
     Cabe mencionar que, además del gran potencial de las SVM para el análisis de sentimientos, la literatura muestra que las Redes Neuronales Convolucionales son otro método de aprendizaje supervisado altamente utilizado en la actualidad para este fin. Se han alcanzado porcentajes de precisión de 80.69\% para análisis de sentimientos en texto \cite{chachra2017sentiment}, 85.2\% utilizando el método fastText de Facebook para obtener la representación vectorial de las palabras \cite{santos2017sentiment} y 99.87\% para texto escrito en lenguaje Bangla \cite{alam2017sentiment}.
     
@@ -247,7 +247,7 @@
     
         \begin{figure}[htbp]
             \centerline{\includegraphics[width=\linewidth]{figuras/acc_svm_w2v.png}}
-            \captionsetup{justification=centering}
+            %\captionsetup{justification=centering}
             \caption{Comparación del desempeño de los SVM con Word2Vec como vectorizador con distintas dimensiones de vectores.}
             \label{fig:acc_svm_w2v}
         \end{figure}
@@ -256,7 +256,7 @@
         
         \begin{figure}[htbp]
             \centerline{\includegraphics[width=\linewidth]{figuras/acc_svm_cv.png}}
-            \captionsetup{justification=centering}
+            %\captionsetup{justification=centering}
             \caption{Comparación del desempeño de los SVM con vectorizador de tipo Bag-Of-Words.}
             \label{fig:acc_svm_cv}
         \end{figure}
@@ -265,7 +265,7 @@
         
         \begin{figure}[htbp]
             \centerline{\includegraphics[width=\linewidth]{figuras/acc_rnc.png}}
-            \captionsetup{justification=centering}
+            %\captionsetup{justification=centering}
             \caption{Comparación del desempeño de los vectorizadores con el clasificador de tipo Red Neuronal Convolucional.}
             \label{fig:acc_rnc}
         \end{figure}
@@ -274,7 +274,7 @@
         
         \begin{figure}[htbp]
             \centerline{\includegraphics[width=\linewidth]{figuras/acc_rnc_ngrams.png}}
-            \captionsetup{justification=centering}
+            %\captionsetup{justification=centering}
             \caption{Comparación del desempeño de las Redes Neuronales Convolucionales con vectorizador Bag-Of-Words para distintos \textit{n}-gramas.}
             \label{fig:acc_rnc_ngrams}
         \end{figure}
@@ -283,7 +283,7 @@
     
         \begin{figure}[htbp]
             \centerline{\includegraphics[width=\linewidth]{figuras/matriz_confusion.png}}
-            \captionsetup{justification=centering}
+            %\captionsetup{justification=centering}
             \caption{Matriz de confusión de la evaluación del modelo de Red Neuronal Convolucional con \textit{4}-gramas.}
             \label{fig:matriz_confusion}
         \end{figure}
