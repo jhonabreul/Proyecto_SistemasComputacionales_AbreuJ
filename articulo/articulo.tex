@@ -15,6 +15,7 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 \usepackage{url}
+\usepackage[font=small]{caption}
 
 % ------------------------------- FIN Paquetes ------------------------------- %
 
@@ -40,7 +41,7 @@
 % ------------------------------ INICIO Portada ------------------------------ %
 
 \title{
-	Análisis de Sentimientos de Texto a Nivel de Frase utilizando SVM y Redes Neuronales Convolucionales
+	Análisis de Sentimientos en texto mediante SVM y Redes Neuronales Convolucionales
 }
 
 \author{
@@ -63,7 +64,7 @@
 
 \begin{abstract}
 
-	
+	Las emociones son un componente semántico primario en la interacción humano-humano y juegan un papel sumamente importante en el comportamiento humano. Por tal motivo, la presente investigación se enfoca en el estudio de diferentes técnicas de representación numérica de documentos de texto y de clasificación de los mismos en base al sentimiento de evocan. Se comparan dos técnicas de vectorización, Word2Vec y el modelo clásico Bag-Of-Words para preparar la data que alimenta a clasificadores de tipo SVM y Redes Neuronales Convolucionales. Los datos utilizados para el entrenamiento y prueba fueron recolectados como parte de la investigación. Los resultados del estudio muestran que, para cantidades pequeñas de datos, modelos sencillos de vectorización, como Bag-Of-Words, se desempeña mejor que otros más complejos. Los clasificador que generó los mejores resultados fueron las Redes Neuronales Convolucionales, sobre todo cuando se toma en cuenta mayor cantidad de información contextual en el proceso de vectorización de los documentos.
 
 \end{abstract}
 
@@ -75,7 +76,7 @@
 
 \begin{IEEEkeywords}
 	
-	
+	Análisis de sentimientos, vectorización, clasificación, Redes Neuronales Convolucionales, SVM, Bag-Of-Words.
     	
 \end{IEEEkeywords}
 
@@ -223,10 +224,6 @@
         \end{enumerate}
     
         El formulario fue distribuido a diversas personas, so solo de la comunidad estudiantil, sino también a personas ajenas al proyecto, como familiares y amigos. De esta manera, se pudo obtener una base de datos compuesta de 600 frases u oraciones, distribuidas equitativamente entre \textit{Positivas}, \textit{Negativas} y \textit{Neutrales}.
-            
-        %No obstante, debido a la poca colaboración obtenida, no se pudo recolectar suficientes datos, por lo cual se decidió realizar una búsqueda exhaustiva de bases de datos. Se utilizó, entonces, una base de datos de tweets de España, en formato XML, etiquetada con sentimientos que van desde muy negativo a muy positivo (N+, N, NEU, NONE, P, P+). Esta base de datos fue obtenida del Taller de Análisis Semántico en la SEPLN (TASS) 2012 \cite{sepln2012tass}. Por motivos de licencia, el corpus del TASS no puede ser distribuido, pero puede obtenerse públicamente solicitándolo al correo electrónico de contacto que se encuentra en el sitio Web del taller.
-        
-        %Vale la pena mencionar que, con el motivo de aprovechar los datos previamente recolectados, estos se combinaron con los del TASS.
     
     % --------------------------- FIN Bases de datos ------------------------- %
     
@@ -246,11 +243,50 @@
     
     \subsection{Resultados de los experimentos}
     
-        % Comparar resultados SVM vs RNC con Word2Vec
+        Se realizaron implementaciones con SVM y Redes Neuronales Convolucionales, utilizando vectorizadores de tipo Bag-Of-Words y Word2Vec, para hacer comparaciones. Para clasificar en tres clases diferentes (positivo, negativo y neutral), se espera que el mínimo porcentaje de exactitud sea 66,66\%, de modo que las predicciones sean mejor que aleatorias. Los resultados indican que las SVM con el vectorizador Word2Vec no logran el desempeño mínimo requerido (ver Figura \ref{fig:acc_svm_w2v}), incluso para distintos tamaños de los vectores que representan los documentos. Una de las razones que podrían constatar estos resultados es el tamaño del dataset utilizado, pues es requerido, para los SVM, que la cantidad de datos sea la suficiente para obtener del modelo una generosa habilidad para generalizar,sobre todo para los modelos no lineales. Otro factor importante es el uso de Word2Vec para vectorizar los documentos, pues este modelo también requiere de mayor cantidad de datos para mejorar su rendimiento.
+    
+        \begin{figure}[htbp]
+            \centerline{\includegraphics[width=\linewidth]{figuras/acc_svm_w2v.png}}
+            \captionsetup{justification=centering}
+            \caption{Comparación del desempeño de los SVM con Word2Vec como vectorizador con distintas dimensiones de vectores.}
+            \label{fig:acc_svm_w2v}
+        \end{figure}
+    
+        Del mismo modo, el uso de un vectorizador de tipo Bag-of-Words no logró mucho como intento de mejorar el desempeño de las SVM (Figura \ref{fig:acc_svm_cv}). Esto apunta a que el pobre desempeño de las SVM como clasificador para los datos siendo utilizados puede deberse al tamaño del dataset más que al tipo de vectorizador en uso.
         
-        % Comparar resultados SVM vs RNC con CountVectorizer
+        \begin{figure}[htbp]
+            \centerline{\includegraphics[width=\linewidth]{figuras/acc_svm_cv.png}}
+            \captionsetup{justification=centering}
+            \caption{Comparación del desempeño de los SVM con vectorizador de tipo Bag-Of-Words.}
+            \label{fig:acc_svm_cv}
+        \end{figure}
+    
+        Por otro lado, la Red Neuronal Convolucional alcanzó la exactitud mínima en todos los casos (Figura \ref{fig:acc_rnc}), tanto para el vectorizador Word2Vec con distintos tamaños de vectores, como con el vectorizador Bag-Of-Words, con el cual se alcanzó el mejor desempeño (78,9\%), una diferencia bastante marcada respecto al uso de Word2Vec. Con lo anterior se puede inferir, entonces, que el vectorizador Word2Vec podría desempeñarse mejor si, tal como se expresa en la literatura, se utiliza un dataset con una cantidad de datos suficiente tanto para el vectorizador como para el clasificador.
         
-        % Resultados de algunas RNC con diferentes parámetros para CountVectorizer
+        \begin{figure}[htbp]
+            \centerline{\includegraphics[width=\linewidth]{figuras/acc_rnc.png}}
+            \captionsetup{justification=centering}
+            \caption{Comparación del desempeño de los vectorizadores con el clasificador de tipo Red Neuronal Convolucional.}
+            \label{fig:acc_rnc}
+        \end{figure}
+    
+        Adicionalmente, las pruebas realizadas para comparar el desempeño del vectorizador Bag-Of-Words con la Red Neuronal Convolucional, para palabras, bigramas, \textit{3}-gramas, \textit{4}-gramas y \textit{5}-gramas, muestran una ligera mejora en el desempeño del clasificador cuando se toma más información contextual de las oraciones para su vectorización --- específicamente para \textit{4}-gramas (Figura \ref{fig:acc_rnc_ngrams}). Sin embargo, el comportamiento es similar, en el caso del dataset disponible, para todos los \textit{n}-gramas tomados en consideración, lo cual puede deberse a la longitud limitada de las oraciones en la base de datos.
+        
+        \begin{figure}[htbp]
+            \centerline{\includegraphics[width=\linewidth]{figuras/acc_rnc_ngrams.png}}
+            \captionsetup{justification=centering}
+            \caption{Comparación del desempeño de las Redes Neuronales Convolucionales con vectorizador Bag-Of-Words para distintos \textit{n}-gramas.}
+            \label{fig:acc_rnc_ngrams}
+        \end{figure}
+    
+        La Figura \ref{fig:matriz_confusion} muestra la matriz de confusión de las pruebas de la Red Neuronal Convolucional más apropiada que pudo encontrarse, utilizando \textit{4}-gramas, la cual indica, entre otras cosas, la cantidad de falsos positivos de un conjunto de clasificaciones. En esta se puede observar que, para la clase de oraciones con sentimiento \textit{neutral}, existe una discrepancia considerable, con solo un 50\% de oraciones correctamente clasificadas, lo cual puede deberse a que las personas participantes de la recolección de datos no entendieran exactamente lo que se considera un sentimiento neutral.
+    
+        \begin{figure}[htbp]
+            \centerline{\includegraphics[width=\linewidth]{figuras/matriz_confusion.png}}
+            \captionsetup{justification=centering}
+            \caption{Matriz de confusión de la evaluación del modelo de Red Neuronal Convolucional con \textit{4}-gramas.}
+            \label{fig:matriz_confusion}
+        \end{figure}
     
     % ------------------ FIN Resultados de los experimentos ------------------ %
 
@@ -262,7 +298,11 @@
 
 \section{Conclusiones} \label{sec:conclusiones}
     
-	
+	El objetivo de esta investigación es estudiar y comparar dos tipos de vectorizadores y dos tipos de clasificadores para la identificación de la orientación del sentimiento de documentos (texto). Las aplicaciones son bastas, siendo una de estas la implementación de detección de emociones, en un canal, para un robot social. Este canal puede ser el audio, el cual, luego se ser procesado y transformado a texto, puede ser clasificado por el módulo en cuestión.
+    
+    Debido a la poca cantidad de datos disponibles, fue necesario realizar pruebas con distintos tipos de vectorizadores, las cuales apuntan a que un modelo simple, como el Bag-Of-Words, se desempeña mejor para pocos datos que vectorizadores más complejos, como el Word2Vec. Del mismo modo y, probablemente por el mismo motivo, las Redes Neuronales Convolucionales mostraron un rendimiento superior a las SVM, sobre todo cuando se toma en cuenta más información contextual en el proceso de vectorización.
+    
+    Se cree que, si se procede a la recaudación de más datos, siguiendo el mismo procedimiento para la recolección de los actualmente disponibles, se pueda mejorar el desempeño de los clasificadores para obtener mejores resultados. Se delega como trabajo futuro el proceso de expansión de la base de datos y el desarrollo de una aplicación que permita realizar la conversión audio-texto para sentar las bases para un módulo integrable de detección de emociones para un robot social.
 
 % ----------------------------- FIN Conclusiones ----------------------------- %
 
